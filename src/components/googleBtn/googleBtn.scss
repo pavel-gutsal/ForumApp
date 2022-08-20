@@ -1,0 +1,38 @@
+.googleBtn {
+  width:240px;
+  height:50px;
+  background: #4285f4;
+  border: 1px solid #4285f4;
+  display: flex;
+  font-family: "Roboto", 'Times New Roman';
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    box-shadow: -2px 2px 10px 0 #4285f4;
+  }
+
+  &__header {
+    font-weight: 400;
+    font-size: 14px;
+    color:#fff;
+    line-height: 50px;
+    margin: auto;
+  }
+
+  &__container {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:48px;
+    height:48px;
+  }
+
+  &__img {
+    width:18px;
+    height:18px;
+  }
+}

@@ -1,0 +1,21 @@
+@import '../../styles/globalVariables.scss';
+
+.navbar {
+  height: 70px;
+  background: $bgBlue;
+  padding: 10px 50px;
+
+  &__container {
+    display: flex;
+    width:100%;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 50px;
+    color: white;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+  }
+}

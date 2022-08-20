@@ -1,0 +1,126 @@
+@import '../../styles/globalVariables.scss';
+
+$formheight: 60px;
+
+.ChatForm {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  min-height: 100px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+
+
+  &__form {
+    width: 1000px;
+    min-height: 60px;
+    height: auto;
+    display: flex;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 50px 0 50px 50px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    bottom: 0;
+
+    @media screen and (max-width:1040px) {
+      width: 80vw;
+    }
+  }
+
+  &__file {
+    display: none;
+  }
+
+  &__label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+  }
+
+  &__addImg {
+    width: 40px;
+    height: 40px;
+  }
+
+  // &__message {
+  //   font-family: "Roboto", Arial, Helvetica, sans-serif;
+  //   font-size: 18px;
+  //   font-weight: 400;
+  //   border: none;
+  //   outline: none;
+  //   resize: none;
+  //   width: 800px;
+  //   line-height: 22px;
+  //   padding: 8px 0;
+  //   overflow: scroll;
+  //   color: rgb(37, 37, 37);
+  //   position: relative;
+  //   top:15px;
+  //   background: none;
+
+
+  //   @media screen and (max-width:1040px) {
+  //     width: 80%;
+  //   }
+
+  //   &::-webkit-scrollbar {
+  //     width: 0; /* for Chrome, Safari, and Opera */
+  //   }
+
+  //   &::placeholder{
+  //     color: rgb(77, 77, 77)
+  //   }
+  // }
+
+  &__message {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    border: none;
+    outline: none;
+    resize: none;
+    width: 800px;
+    line-height: 22px;
+    height: 60px;
+    padding: 18px 0;
+    overflow: scroll;
+    color: rgb(37, 37, 37);
+    background: red;
+
+
+    @media screen and (max-width:1040px) {
+      width: 80%;
+    }
+
+    &::-webkit-scrollbar {
+      width: 0; /* for Chrome, Safari, and Opera */
+    }
+
+    &::placeholder{
+      color: rgb(77, 77, 77)
+    }
+  }
+
+  &__send {
+    background: $bgBlue;
+    width: 100px;
+    height: $formheight;
+    border: 1px solid $bgBlue;
+    border-radius: 60px 0 60px 60px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__sendImg {
+    width: 40px;
+    height: 40px;
+    transform: rotate(-45deg) translateX(8px) 
+  }
+}
