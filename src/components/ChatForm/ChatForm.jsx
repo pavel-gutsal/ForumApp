@@ -1,44 +1,36 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './ChatForm.scss';
+import { useFireStore } from '../../hooks/useFireStore';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const ChatForm = () => {
   const [message, setMessage] = useState('');
-  const form = useRef(null);
-  const button = useRef(null);
+  const { addMessage } = useFireStore('chat-text');
+  const { user } = useAuthContext();
+  const divContEdible = useRef(null);
 
-  const textAreaHandler = (e) => {
-    setMessage(e.target.value);
-    e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
+  const submitHandler = () => {
+    if (message === '') {
+      return;
+    }
 
-    // console.log(e.target.scrollHeight);
-
-    // if (e.target.scrollHeight > 50) {
-    //   e.target.style.height = `${e.target.scrollHeight}px`;
-    //   e.target.style.top = 0;
-    // }
-
-    // if (e.target.scrollHeight < 50) {
-    //   // e.target.style.top = `${45 - e.target.scrollHeight}px`;
-    //   e.target.style.top = '8px';
-    //   form.current.style.bottom = '0';
-    // } else if (e.target.scrollHeight > 50 && e.target.scrollHeight < 80) {
-    //   e.target.style.top = `${70 - e.target.scrollHeight}px`;
-    //   button.current.style.borderRadius = '60px 0 60px 60px';
-    //   form.current.style.bottom = '0';
-    // } else {
-    //   e.target.style.top = 0;
-    //   form.current.style.height = 'auto';
-    //   form.current.style.bottom = '20px';
-    //   button.current.style.borderRadius = '60px';
-    // }
+    addMessage({
+      message,
+      userId: user.uid,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+    });
+    divContEdible.current.innerText = '';
   };
 
   return (
     <div className="ChatForm">
       <div className="wrapper">
         <form
-          ref={form}
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitHandler();
+          }}
           className="ChatForm__form"
         >
           <label
@@ -57,16 +49,17 @@ export const ChatForm = () => {
               accept="image/*"
             />
           </label>
-          <textarea
-            className="ChatForm__message"
-            placeholder="Type a message ..."
-            onChange={(e) => {
-              textAreaHandler(e);
+          <div
+            ref={divContEdible}
+            contentEditable
+            data-placeholder="Type a message..."
+            className="ChatForm__textdiv"
+            onInput={(e) => {
+              setMessage(e.target.innerText);
             }}
             value={message}
           />
           <button
-            ref={button}
             type="submit"
             className="ChatForm__send"
           >
