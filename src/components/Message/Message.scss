@@ -1,0 +1,82 @@
+.Message{
+  display: flex;
+  gap: 4px;
+
+  &.isOwn {
+    flex-direction: row-reverse;
+  }
+
+  &__unit {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__avatar {
+    width:40px;
+    height:40px;
+    border: none;
+    border-radius: 12px;
+  }
+
+  &__person-wrapper {
+    display: flex;
+
+    &.isOwn {
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+  }
+  
+  &__person {
+    font-family:"Open Sans", Arial, Helvetica, sans-serif;
+    padding-left: 10px;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgb(69, 69, 69);
+    margin-top: -20px;
+  }
+  
+  &__content {
+    background: rgb(121, 239, 182);
+    padding: 8px;
+    border: none;
+    border-radius: 0 15px 15px 15px ;
+    display: flex;
+    flex-direction: column;
+    gap:4px;
+
+    &.isOwn {
+      background: rgb(236, 253, 255);
+      border-radius: 15px 0 15px 15px ;
+    }
+  }
+
+  &__text {
+    font-size: 16px;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    color: rgb(28, 28, 28);
+    padding-right: 8px;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+    max-width: 600px;
+
+    &.isOwn {
+      padding-right: 0;
+      padding-left: 8px;
+    }
+  }
+  
+  &__time-container {
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  &__timeStamp {
+    font-size: 11px;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    color: rgb(67, 67, 67);
+  }
+}

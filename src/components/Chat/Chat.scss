@@ -1,0 +1,20 @@
+.Chat {
+  background: rgb(232, 232, 232);
+  height: auto;
+  height: calc(100vh - 200px);
+  overflow: scroll;
+  position: relative;
+  padding: 20px 0;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__wrap {
+    width:1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
