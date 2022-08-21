@@ -10,5 +10,13 @@ export const useFireStore = (collection) => {
     }
   };
 
-  return { addMessage };
+  const deleteMessage = async (messageId) => {
+    try {
+      await projectFirestore.collection(collection).doc(messageId).delete();
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  return { addMessage, deleteMessage };
 };

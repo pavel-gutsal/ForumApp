@@ -1,10 +1,12 @@
 import React, { useState, useRef } from 'react';
+import classNames from 'classnames';
 import './ChatForm.scss';
 import { useFireStore } from '../../hooks/useFireStore';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 export const ChatForm = () => {
   const [message, setMessage] = useState('');
+  const [scrollHeight, setScrollHeight] = useState(false);
   const { addMessage } = useFireStore('chat-text');
   const { user } = useAuthContext();
   const divContEdible = useRef(null);
@@ -14,13 +16,21 @@ export const ChatForm = () => {
       return;
     }
 
+    const str = message.replace(/\s+/g, ' ').trim();
+
+    if (str === '') {
+      return;
+    }
+
     addMessage({
-      message,
+      message: str,
       userId: user.uid,
       displayName: user.displayName,
       photoURL: user.photoURL,
     });
     divContEdible.current.innerText = '';
+    setMessage('');
+    setScrollHeight(false);
   };
 
   return (
@@ -31,7 +41,7 @@ export const ChatForm = () => {
             e.preventDefault();
             submitHandler();
           }}
-          className="ChatForm__form"
+          className={classNames('ChatForm__form', { roundBorder: scrollHeight })}
         >
           <label
             className="ChatForm__label"
@@ -56,15 +66,20 @@ export const ChatForm = () => {
             className="ChatForm__textdiv"
             onInput={(e) => {
               setMessage(e.target.innerText);
+              if (e.target.scrollHeight > 60) {
+                setScrollHeight(true);
+                return;
+              }
+              setScrollHeight(false);
             }}
             value={message}
           />
           <button
             type="submit"
-            className="ChatForm__send"
+            className={classNames('ChatForm__send', { round: scrollHeight })}
           >
             <img
-              className="ChatForm__sendImg"
+              className={classNames('ChatForm__sendImg', { roundImg: scrollHeight })}
               src="./assets/send.svg"
               alt="send"
             />
