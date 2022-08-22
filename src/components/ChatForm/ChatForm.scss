@@ -6,10 +6,11 @@ $formheight: 60px;
   position: absolute;
   bottom: 0;
   left: 0;
-  min-height: 100px;
+  min-height: 80px;
   width: 100vw;
   display: flex;
   justify-content: center;
+  align-items: center;
   z-index: 10;
   background: white;
 
@@ -27,11 +28,15 @@ $formheight: 60px;
     border-radius: 50px 0 50px 50px;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin: 10px 0;
     transition: all 0.4s ease-in-out;
 
     @media screen and (max-width:1040px) {
       width: 80vw;
+    }
+
+    @media screen and (max-width:600px) {
+      width: 95vw;
     }
   }
 
@@ -40,6 +45,8 @@ $formheight: 60px;
   }
 
   &__label {
+    margin-left: 8px;
+    margin-right: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,11 +62,19 @@ $formheight: 60px;
   &__addImg {
     width: 40px;
     height: 40px;
+    animation-name: appearAddImage;
+    animation-duration: 0.5s;
 
     @media screen and (max-width:600px) {
       width: 35px;
       height: 35px;
     }
+  }
+
+  &__ProgressBar {
+    margin-left: 10px;
+    margin-right: 2px;
+    margin-top: 4px;
   }
 
   &__textdiv {
@@ -147,4 +162,16 @@ $formheight: 60px;
 
 .roundBorder {
   border-radius: 50px;
+}
+
+@keyframes appearAddImage {
+  0%   {
+    transform: scale(0);
+    opacity: 0;
+  }
+  80%  {
+    opacity: 1;
+    transform: scale(1.3)
+  }
+  100% {transform: scale(1)}
 }

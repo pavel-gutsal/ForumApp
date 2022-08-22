@@ -1,15 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import './ChatForm.scss';
 import { useFireStore } from '../../hooks/useFireStore';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useStorage } from '../../hooks/useStorage';
 
 export const ChatForm = () => {
+  const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
   const [scrollHeight, setScrollHeight] = useState(false);
   const { addMessage } = useFireStore('chat-text');
   const { user } = useAuthContext();
   const divContEdible = useRef(null);
+  const { uploadImage, progress, imageUrl } = useStorage();
+
+  console.log(progress);
 
   const submitHandler = () => {
     if (message === '') {
@@ -23,6 +30,8 @@ export const ChatForm = () => {
     }
 
     addMessage({
+      containsImage: false,
+      imageURL: null,
       message: str,
       userId: user.uid,
       displayName: user.displayName,
@@ -32,6 +41,32 @@ export const ChatForm = () => {
     setMessage('');
     setScrollHeight(false);
   };
+
+  useEffect(() => {
+    if (file) {
+      uploadImage(file);
+      console.log(progress);
+    }
+  }, [file]);
+
+  useEffect(() => {
+    if (file && progress === 100) {
+      setFile(null);
+    }
+  }, [progress]);
+
+  useEffect(() => {
+    if (imageUrl) {
+      addMessage({
+        containsImage: true,
+        imageURL: imageUrl,
+        message: null,
+        userId: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
+    }
+  }, [imageUrl]);
 
   return (
     <div className="ChatForm">
@@ -43,22 +78,42 @@ export const ChatForm = () => {
           }}
           className={classNames('ChatForm__form', { roundBorder: scrollHeight })}
         >
-          <label
-            className="ChatForm__label"
-            htmlFor="chat-add-image"
-          >
-            <img
-              className="ChatForm__addImg"
-              src="./assets/add.svg"
-              alt="add"
-            />
-            <input
-              id="chat-add-image"
-              type="file"
-              className="ChatForm__file"
-              accept="image/*"
-            />
-          </label>
+          { file && (
+            <div style={{ width: 50, height: 50 }} className="ChatForm__ProgressBar">
+              <CircularProgressbar
+                value={progress}
+                maxValue={1}
+                strokeWidth={14}
+                styles={buildStyles({
+                  pathColor: 'rgb(252, 220, 126)',
+                  strokeLinecap: 'butt',
+                })}
+              />
+            </div>
+          )}
+          {
+            !file && (
+              <label
+                className="ChatForm__label"
+                htmlFor="chat-add-image"
+              >
+                <img
+                  className="ChatForm__addImg"
+                  src="./assets/add.svg"
+                  alt="add"
+                />
+                <input
+                  id="chat-add-image"
+                  type="file"
+                  className="ChatForm__file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                  }}
+                />
+              </label>
+            )
+          }
           <div
             ref={divContEdible}
             contentEditable
