@@ -9,16 +9,18 @@ import classNames from 'classnames';
 import './Message.scss';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useFireStore } from '../../hooks/useFireStore';
+import { useStorage } from '../../hooks/useStorage';
 
 export const Message = ({
   post, myMessage, sameUserWithPrevMessage, messagePostTime,
 }) => {
   // eslint-disable-next-line object-curly-newline
-  const { photoURL, displayName, message, messageId } = post;
+  const { photoURL, displayName, message, messageId, containsImage } = post;
   const [deleteIconVisible, setDeleteIconVisisble] = useState(false);
   const [chosenMessage, setChosenMessage] = useState(null);
   const { user } = useAuthContext();
   const { deleteMessage } = useFireStore('chat-text');
+  const { deleteStorageImage } = useStorage();
   const trashBin = useRef(null);
 
   const blurHandle = (e) => {
@@ -40,7 +42,11 @@ export const Message = ({
   }, [deleteIconVisible]);
 
   const deleteHandle = () => {
+    if (post.containsImage) {
+      deleteStorageImage(post.imageStorageName);
+    }
     deleteMessage(messageId);
+
     document.removeEventListener('mousedown', blurHandle);
   };
 
@@ -72,7 +78,7 @@ export const Message = ({
           }
         </div>
         <div
-          className={classNames('Message__content', { isOwn: myMessage })}
+          className={classNames('Message__content', { isOwn: myMessage }, { containsImage })}
           onClick={(e) => {
             setDeleteIconVisisble((prev) => {
               if (!prev) {
@@ -82,13 +88,21 @@ export const Message = ({
             });
           }}
         >
-          <p
-            className={classNames('Message__text', { isOwn: myMessage })}
-          >
-            {message}
-          </p>
+          { !post.containsImage ? (
+            <p className={classNames('Message__text', { isOwn: myMessage })}>
+              {message}
+            </p>
+          ) : (
+            <img
+              src={post.imageURL}
+              alt="users pics"
+              className="Message__image"
+            />
+          )}
           <div className="Message__time-container">
-            <h3 className="Message__timeStamp">{messagePostTime[0]}</h3>
+            <h3 className={classNames('Message__timeStamp', { containsImage })}>
+              {messagePostTime[0]}
+            </h3>
           </div>
         </div>
       </div>

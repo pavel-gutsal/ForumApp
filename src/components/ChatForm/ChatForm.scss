@@ -65,6 +65,11 @@ $formheight: 60px;
     animation-name: appearAddImage;
     animation-duration: 0.5s;
 
+    &:hover,
+    &:focus {
+      cursor: pointer;
+    }
+
     @media screen and (max-width:600px) {
       width: 35px;
       height: 35px;

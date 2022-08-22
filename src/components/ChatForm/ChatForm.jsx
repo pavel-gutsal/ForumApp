@@ -14,7 +14,8 @@ export const ChatForm = () => {
   const { addMessage } = useFireStore('chat-text');
   const { user } = useAuthContext();
   const divContEdible = useRef(null);
-  const { uploadImage, progress, imageUrl } = useStorage();
+  // eslint-disable-next-line object-curly-newline
+  const { uploadImage, progress, imageUrl, imageStorageName } = useStorage();
 
   console.log(progress);
 
@@ -31,6 +32,7 @@ export const ChatForm = () => {
 
     addMessage({
       containsImage: false,
+      imageStorageName: null,
       imageURL: null,
       message: str,
       userId: user.uid,
@@ -59,6 +61,7 @@ export const ChatForm = () => {
     if (imageUrl) {
       addMessage({
         containsImage: true,
+        imageStorageName,
         imageURL: imageUrl,
         message: null,
         userId: user.uid,

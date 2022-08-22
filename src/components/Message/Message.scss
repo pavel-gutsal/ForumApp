@@ -51,6 +51,12 @@
       background: rgb(236, 253, 255);
       border-radius: 15px 0 15px 15px ;
     }
+
+    &.containsImage {
+      padding: 0;
+      overflow: hidden;
+      gap:0;
+    }
   }
 
   &__text {
@@ -82,10 +88,24 @@
     }
   }
   
+  &__image {
+    max-width: 600px;
+
+    @media screen and (max-width:1040px){
+      max-width: 70vw;
+    }
+
+    @media screen and (max-width:600px){
+      max-width: 65vw;
+    }
+  }
+
+
   &__time-container {
     width:100%;
     display: flex;
     justify-content: flex-end;
+    position: relative;
   }
   
   &__timeStamp {
@@ -93,6 +113,17 @@
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-weight: 300;
     color: rgb(67, 67, 67);
+
+    &.containsImage {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: rgb(229, 229, 229);
+      background: rgba(0, 0, 0, 0.6);
+      margin-right: 10px;
+      margin-bottom: 3px;
+      padding: 0 3px;
+    }
   }
   
   &__delete-container{
@@ -111,6 +142,8 @@
     align-items: center;
     border-radius: 50%;
     transition: background 0.4s ease-in-out;
+    animation: trashBinAppear;
+    animation-duration: 0.4s;
 
     @media screen and (max-width:600px){
       margin:0 5px;
@@ -144,4 +177,19 @@
 
 .margin {
   margin-top: 25px;
+}
+
+@keyframes trashBinAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
 }
