@@ -17,8 +17,6 @@ export const ChatForm = () => {
   // eslint-disable-next-line object-curly-newline
   const { uploadImage, progress, imageUrl, imageStorageName } = useStorage();
 
-  console.log(progress);
-
   const submitHandler = () => {
     if (message === '') {
       return;

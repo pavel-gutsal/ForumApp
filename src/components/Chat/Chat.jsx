@@ -10,8 +10,12 @@ export const Chat = () => {
   const { user } = useAuthContext();
   const scroll = useRef(null);
 
+  const scrollDown = () => {
+    scroll.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  };
+
   useEffect(() => {
-    scroll.current.scrollIntoView({ behavior: 'smooth' });
+    scrollDown();
   }, [document]);
 
   return (
@@ -40,6 +44,7 @@ export const Chat = () => {
                   myMessage={myMessage}
                   messagePostTime={messagePostTime}
                   sameUserWithPrevMessage={sameUserWithPrevMessage}
+                  scrollDown={scrollDown}
                 />
               );
             })

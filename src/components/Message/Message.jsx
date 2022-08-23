@@ -12,7 +12,7 @@ import { useFireStore } from '../../hooks/useFireStore';
 import { useStorage } from '../../hooks/useStorage';
 
 export const Message = ({
-  post, myMessage, sameUserWithPrevMessage, messagePostTime,
+  post, myMessage, sameUserWithPrevMessage, messagePostTime, scrollDown,
 }) => {
   // eslint-disable-next-line object-curly-newline
   const { photoURL, displayName, message, messageId, containsImage } = post;
@@ -94,6 +94,7 @@ export const Message = ({
             </p>
           ) : (
             <img
+              onLoad={()=>{ scrollDown(); }}
               src={post.imageURL}
               alt="users pics"
               className="Message__image"
